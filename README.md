@@ -45,7 +45,7 @@ $ cd whatsapp-business-jaspers-market
 
 You will need:
 
-- [Node](https://nodejs.org/en/) 10.x or higher
+- [Node](https://nodejs.org/en/) 18.19 or higher
 - Remote server service, a local tunneling service such as [ngrok](https://ngrok.com/), or your own webserver.
 
 # Usage
@@ -55,7 +55,15 @@ You will need:
 #### 1. Setup templates
 In order for the app to send templated messages, you need to first create those templates under your WhatsApp Business Account. You can either do this by running `./template.sh` or through [WhatsApp Manager](https://business.facebook.com/latest/whatsapp_manager/message_templates).
 
-#### 2. Install Redis
+#### 2. Upload runtime media
+
+Template example handles are only used while creating templates. Runtime sends require media IDs uploaded for the phone number that sends the messages.
+
+Upload each image used by the templates through the WhatsApp Cloud API media endpoint for your sender phone number. Save the returned IDs as `GROCERIES_MEDIA_ID`, `STRAWBERRIES_MEDIA_ID`, `SHEET_PAN_DINNER_MEDIA_ID`, and `SALAD_BOWL_MEDIA_ID` in `.env`. Use assets that you own and do not use Asset Manager URLs or the upload-session handles printed by `template.sh` as runtime media IDs.
+
+Media IDs are scoped to the phone number that uploaded them and expire after 30 days. Re-upload your assets, update all four environment variables, and restart the application before they expire.
+
+#### 3. Install Redis
 If not already installed, install redis via [download](https://redis.io/docs/latest/operate/oss_and_stack/install/install-stack/).
 
 You can then start a redis daemon locally via command line:
@@ -64,7 +72,7 @@ You can then start a redis daemon locally via command line:
 redis-server --daemonize yes
 ```
 
-#### 3. Install tunneling service
+#### 4. Install tunneling service
 
 If not already installed, install ngrok via [download](https://ngrok.com/download) or via command line:
 
@@ -93,7 +101,7 @@ Connections                   ttl     opn     rt1     rt5     p50     p90
 ```
 Note the https URL of the external server that is forwarded to your local machine. In the above example, it is `https://1c3b838deacb.ngrok.io`.
 
-#### 4. Install the dependencies
+#### 5. Install the dependencies
 
 Open a new terminal tab, also in the repo directory.
 
@@ -107,7 +115,7 @@ Alternatively, you can use [Yarn](https://yarnpkg.com/en/):
 $ yarn install
 ```
 
-#### 5. Set up .env file
+#### 6. Set up .env file
 
 Copy the file `.sample.env` to `.env`
 
@@ -115,25 +123,31 @@ Copy the file `.sample.env` to `.env`
 cp .sample.env .env
 ```
 
-Edit the `.env` file to add all the saved secrets. Note that `VERIFY_TOKEN` will be a passphrase you create that will handshake your app with webhook subscription process.
+Edit the `.env` file to add all saved credentials and the four media IDs returned by the WhatsApp Cloud API media endpoint. `VERIFY_TOKEN` is a passphrase you create for the webhook subscription handshake. The application refuses to start when a media ID is missing, blank, or still set to the example value `1234567890`.
 
-#### 6. Run your app locally
+#### 7. Run your app locally
 
 ```bash
 node app.js
 ```
 
-#### 7. Configure your webhook subscription
+#### 8. Configure your webhook subscription
 
 Use the `VERIFY_TOKEN` that you created in `.env` file and subscribe your webhook server's URL for WhatsApp webhooks in your developer page's _Configuration_ tab. Make sure to subscribe to the messages field. Note that the app listens to webhooks on the `/webhook` endpoint.
 
-#### 8. Test that your app setup is successful
+#### 9. Test that your app setup is successful
 
 Send a message to your WhatsApp Business Account from a consumer WhatsApp number.
 
 You should see the webhook called in the ngrok terminal tab, and in your application terminal tab.
 
 If you see a response to your message in WhatsApp, you have fully set up your app! Voilà!
+
+Exercise all three reply buttons and verify the grocery image, strawberry image, and both recipe carousel images render. Run the unit tests with:
+
+```bash
+npm test
+```
 
 ## License
 

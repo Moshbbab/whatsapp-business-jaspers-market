@@ -46,7 +46,7 @@ function sendInteractiveMediaMessage(messageId, senderPhoneNumberId, recipientPh
     {
       templateName: "grocery_delivery_utility",
       locale: "en_US",
-      imageLink: "https://scontent.xx.fbcdn.net/mci_ab/uap/asset_manager/id/?ab_b=e&ab_page=AssetManagerID&ab_entry=1530053877871776",
+      imageId: config.groceriesMediaId,
     }
   );
 }
@@ -59,7 +59,7 @@ function sendLimitedTimeOfferMessage(messageId, senderPhoneNumberId, recipientPh
     {
       templateName: "strawberries_limited_offer",
       locale: "en_US",
-      imageLink: "https://scontent.xx.fbcdn.net/mci_ab/uap/asset_manager/id/?ab_b=e&ab_page=AssetManagerID&ab_entry=1393969325614091",
+      imageId: config.strawberriesMediaId,
       offerCode: "BERRIES20",
     }
   );
@@ -73,9 +73,9 @@ function sendMediaCarouselMessage(messageId, senderPhoneNumberId, recipientPhone
     {
       templateName: "recipe_media_carousel",
       locale: "en_US",
-      imageLinks: [
-        "https://scontent.xx.fbcdn.net/mci_ab/uap/asset_manager/id/?ab_b=e&ab_page=AssetManagerID&ab_entry=1389202275965231",
-        "https://scontent.xx.fbcdn.net/mci_ab/uap/asset_manager/id/?ab_b=e&ab_page=AssetManagerID&ab_entry=3255815791260974"
+      imageIds: [
+        config.sheetPanDinnerMediaId,
+        config.saladBowlMediaId,
       ]
     }
   );
