@@ -9,6 +9,7 @@
 
 const constants = require("./constants");
 const config = require("./config");
+const Attribution = require('./attribution');
 const GraphApi = require('./graph-api');
 const Message = require('./message');
 const Status = require('./status');
@@ -93,6 +94,7 @@ module.exports = class Conversation {
 
   static async handleMessage(senderPhoneNumberId, rawMessage) {
     const message = new Message(rawMessage);
+    Attribution.logAttributionEvent(message, senderPhoneNumberId);
 
     switch (message.type) {
       case constants.REPLY_INTERACTIVE_MEDIA_ID:

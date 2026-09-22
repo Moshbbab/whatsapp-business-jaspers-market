@@ -4,6 +4,29 @@ Jasper's Market is a fictional grocery brand created to showcase key features of
 
 [Access the WhatsApp experience](https://wa.me/15558813169?text=Get+started)
 
+## Source attribution
+
+Keep the existing link above for the Developer Docs QR placement. It prefills `Get started`, which the application attributes to `developer_docs`. For the new surface, [use this link](https://wa.me/15558813169?text=Try%20it%20out) to prefill `Try it out`, which is attributed to `new_surface`.
+
+The application writes one JSON event to stdout after the user sends either recognized phrase. AppRunner forwards stdout to CloudWatch Logs. Matching is case-sensitive after trimming surrounding whitespace. Other messages, including edited phrases and older tokenized formats, do not produce attribution events.
+
+The event name is `entry_source_attributed`. Its fields are `schema_version`, `source_surface`, `inbound_message_id`, `receiver_phone_number_id`, and `event_timestamp`. The event does not include the sender phone number or raw message text. This measures attributed conversation starts, not QR scans or link opens.
+
+WhatsApp can retry the same webhook, so use `inbound_message_id` to deduplicate events instead of adding Redis state to the message path. This CloudWatch Logs Insights query returns one row per inbound WAMID while retaining the delivery count:
+
+```text
+fields @timestamp, event_timestamp, source_surface,
+       inbound_message_id, receiver_phone_number_id
+| filter event_name = "entry_source_attributed"
+| stats latest(@timestamp) as last_seen,
+        count(*) as webhook_delivery_count,
+        latest(event_timestamp) as event_timestamp,
+        latest(source_surface) as source_surface,
+        latest(receiver_phone_number_id) as receiver_phone_number_id
+  by inbound_message_id
+| sort last_seen desc
+```
+
 See the [Developer Documentation on this experience](https://developers.facebook.com/documentation/business-messaging/whatsapp/overview).
 
 # Setting up your WhatsApp App
