@@ -103,7 +103,7 @@ test("phrase attribution is logged without changing the welcome response", async
   assert.deepEqual(JSON.parse(logLines[0]), {
     event_name: "entry_source_attributed",
     schema_version: 1,
-    source_surface: "new_surface",
+    source_surface: "simplified_devx_onboarding",
     inbound_message_id: "wamid.conversation-start",
     receiver_phone_number_id: "720611841146439",
     event_timestamp: "1770000005",

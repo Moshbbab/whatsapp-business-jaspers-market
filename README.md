@@ -6,7 +6,7 @@ Jasper's Market is a fictional grocery brand created to showcase key features of
 
 ## Source attribution
 
-Keep the existing link above for the Developer Docs QR placement. It prefills `Get started`, which the application attributes to `developer_docs`. For the new surface, [use this link](https://wa.me/15558813169?text=Try%20it%20out) to prefill `Try it out`, which is attributed to `new_surface`.
+Keep the existing link above for the Developer Docs QR placement. It prefills `Get started`, which the application attributes to `developer_docs`. For simplified DevX onboarding, [use this link](https://wa.me/15558813169?text=Try%20it%20out) to prefill `Try it out`, which is attributed to `simplified_devx_onboarding`.
 
 The application writes one JSON event to stdout after the user sends either recognized phrase. AppRunner forwards stdout to CloudWatch Logs. Matching is case-sensitive after trimming surrounding whitespace. Other messages, including edited phrases and older tokenized formats, do not produce attribution events.
 

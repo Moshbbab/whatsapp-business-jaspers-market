@@ -22,15 +22,15 @@ test("developer docs startup text maps to its source", () => {
   });
 });
 
-test("new-surface startup text maps to its source", () => {
+test("simplified DevX onboarding text maps to its source", () => {
   assert.deepEqual(classifySource("Try it out"), {
-    sourceSurface: "new_surface",
+    sourceSurface: "simplified_devx_onboarding",
   });
 });
 
 test("outer whitespace does not change a recognized source", () => {
   assert.deepEqual(classifySource("  Try it out\n"), {
-    sourceSurface: "new_surface",
+    sourceSurface: "simplified_devx_onboarding",
   });
 });
 
@@ -63,7 +63,7 @@ test("event builder emits only the approved fields", () => {
   assert.deepEqual(event, {
     event_name: "entry_source_attributed",
     schema_version: 1,
-    source_surface: "new_surface",
+    source_surface: "simplified_devx_onboarding",
     inbound_message_id: "wamid.attributed-message",
     receiver_phone_number_id: "720611841146439",
     event_timestamp: "1770000000",

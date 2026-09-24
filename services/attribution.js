@@ -11,7 +11,7 @@ const constants = require("./constants");
 
 const SOURCE_BY_MESSAGE = Object.freeze({
   [constants.USER_START_MESSAGE]: "developer_docs",
-  [constants.USER_TRY_OUT_MESSAGE]: "new_surface",
+  [constants.USER_TRY_OUT_MESSAGE]: "simplified_devx_onboarding",
 });
 
 function classifySource(textBody) {
